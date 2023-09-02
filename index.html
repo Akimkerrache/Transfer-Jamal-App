@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/styles.css" />
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.js"></script>
+    <title>Jamal-App Pay</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="assets/J-logo.png" alt="Company Logo" />
+      </div>
+      <div class="l-time">
+        <time id="time">08:30 pm</time>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Back</a></li>
+          <li><a href="jamalpay.com">Home</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="m-time">
+      <time id="time_m">08:30 pm</time>
+    </div>
+    <section class="main-section">
+      <form id="transfer-form">
+        <!-- Personal Details -->
+        <div class="form-group">
+          <label for="first-name">First Name:</label>
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            required
+            autocomplete="family-name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name:</label>
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            required
+            autocomplete="given-name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            autocomplete="cc-number"
+            placeholder="Ex: +1 012 345 6789"
+          />
+        </div>
+
+        <!-- Recipient's Details -->
+        <div class="form-group">
+          <label for="recipient-name">Recipient's Name:</label>
+          <input
+            type="text"
+            id="recipient-name"
+            name="recipient-name"
+            required
+            autocomplete="given-name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-email">Recipient's Email:</label>
+          <input
+            type="email"
+            id="recipient-email"
+            name="recipient-email"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-phone">Recipient's Phone:</label>
+          <input
+            type="tel"
+            id="recipient-phone"
+            name="recipient-phone"
+            required
+            autocomplete="cc-number"
+            placeholder="Ex: +213 712 345 6789"
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-CCP">Recipient CCP</label>
+          <input
+            type="tel"
+            id="recipient-CCP"
+            name="recipient-CCP"
+            required
+            autocomplete="cc-number"
+            placeholder="0123456789/ 99"
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipient-address">Recipient's Address (Wilayas)</label>
+          <select id="wilayas" name="Wilayas">
+            <!-- Display a list of wilayas of Algeria to choose -->
+            <option value="	adrar">Adrar</option>
+            <option value="chlef">Chlef</option>
+            <option value="	Laghouat">Laghouat</option>
+            <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+            <option value="Batna">Batna</option>
+            <option value="bejaia">Bejaia</option>
+            <option value="Biskra">Biskra</option>
+            <option value="Béchar">Béchar</option>
+            <option value="Blida">Blida</option>
+            <option value="bejaia">Bejaia</option>
+            <option value="bejaia">Bejaia</option>
+            <option value="bejaia">Bejaia</option>
+            <!-- Add more options... -->
+          </select>
+          <!-- Add more address fields as needed... -->
+        </div>
+
+        <!-- Amount and Checkout -->
+        <div class="form-group">
+          <label for="amount">Amount to Send (USD):</label>
+          <input
+            type="number"
+            id="amount_usd"
+            name="amount"
+            placeholder="Enter amount from 50$ to 1000$"
+            required
+            autocomplete="off"
+          />
+          <p id="converted-amount">Amount in DZA: ...</p>
+          <!-- <input type="hidden" id="rate" name="rate" />-->
+          <p>
+            Exchange rate 1 USD = <span id="rate-display">... DZA</span> DZA
+          </p>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            id="message"
+            name="message"
+            placeholder="Your message"
+          />
+        </div>
+
+        <button id="checkout" type="checkout">Checkout</button>
+      </form>
+    </section>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-content"></div>
+        <button id="confirmButton">Confirm</button>
+        <button class="closeButton">Back</button>
+      </div>
+      <div><button id="downloadPdfButton">Download PDF</button></div>
+    </div>
+    <!-- Login form -->
+    <!-- Login Popup Container -->
+    <div id="login-popup" class="popup-login">
+      <div class="popup-content">
+        <span class="close" onclick="closeLoginPopup()">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" required />
+          <label for="password">Password:</label>
+          <input type="password" id="password" required />
+          <button type="button" onclick="login()">Login</button>
+          <button type="button" onclick="closeLoginPopup()">Back</button>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <div class="copy-f">
+        <p class="copy-r">
+          © 2023 Copyright. All Rights Reserved. by G-COSMOS.
+        </p>
+        <button id="login-btn" type="submit" class="login-btn">
+          <img src="/assets/login.png" alt="login" />
+        </button>
+      </div>
+    </footer>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
