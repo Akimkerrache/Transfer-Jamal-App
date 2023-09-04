@@ -2,30 +2,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   const amountInput = document.getElementById("amount_usd");
   const convertedAmountDisplay = document.getElementById("converted-amount");
+  const toPayAmount = document.getElementById("to-amount-usd");
   const modal = document.getElementById("myModal");
   const confirmButton = document.getElementById("confirmButton");
   const closeButton = document.querySelector(".closeButton");
   const span = document.querySelector(".close");
   const modalContent = document.getElementById("modal-content");
   const transferForm = document.getElementById("transfer-form");
-
-  /*
-  // get rate from admin with WS didn't work
-  const socket = new WebSocket("ws://localhost:3000");
-
-  socket.addEventListener("message", (event) => {
-    const data = JSON.parse(event.data);
-    if (data.exchangeRate !== undefined) {
-      const rateDisplay = document.getElementById("rate-display");
-      rateDisplay.textContent = data.exchangeRate.toFixed(2);
-
-      // Populate the rate field in the transfer form
-      const rateField = document.getElementById("rate");
-      rateField.value = data.exchangeRate;
-    }
-  });
-*/
-  // new try
 
   // Function to fetch and display the latest rate
   async function getLatestRate() {
@@ -58,42 +41,45 @@ document.addEventListener("DOMContentLoaded", function () {
   // Call the function to get the latest rate
   getLatestRate();
 
-  //
-  /*
-  // calulate rate
-  amountInput.addEventListener("input", function () {
-    const amountInUSD = parseFloat(amountInput.value);
-    const amountInDZA = amountInUSD * exchangeRate;
-    convertedAmountDisplay.textContent = `Amount in DZA: ${amountInDZA.toFixed(
-      2
-    )}`;
-  });
-*/
-  /*
-  // new working
-  // Fetch archived rates from the server and populate the table
-  async function fetchArchivedRates() {
-    const response = await fetch("/get-archived-rates");
-    const archivedRates = await response.json();
-
-    // Add archived rates to the table
-    archivedRates.forEach((rate) => {
-      //addRateToTable(rate.date, rate.rate);
-      const exchangeRate = rate.rate;
-      console.log(exchangeRate);
-      const rateDisplay = document.getElementById("rate-display");
-      rateDisplay.textContent = exchangeRate.toFixed(2);
+  // display the payment methosdes
+  document
+    .getElementById("confirm-button")
+    .addEventListener("click", function () {
+      document.getElementById("payment-popup").style.display = "block";
+      // display the amount to pay in usd
+      const amountInUSD = parseFloat(amountInput.value);
+      toPayAmount.textContent = `Zelle exact amount in USD: ${amountInUSD.toFixed(
+        2
+      )}`;
+      modal.style.display = "none";
     });
-  }
-  fetchArchivedRates();
-*/
-  //
 
-  //const rate = parseFloat(document.getElementById("rate").value);
+  document.getElementById("card-button").addEventListener("click", function () {
+    document.getElementById("card-details").classList.remove("hidden");
+    document.getElementById("cash-details").classList.add("hidden");
+    document.getElementById("card-button").classList.add("active");
+    document.getElementById("cash-button").classList.remove("active");
+  });
+
+  document.getElementById("cash-button").addEventListener("click", function () {
+    document.getElementById("cash-details").classList.remove("hidden");
+    document.getElementById("card-details").classList.add("hidden");
+    document.getElementById("cash-button").classList.add("active");
+    document.getElementById("card-button").classList.remove("active");
+  });
+
+  document
+    .getElementById("close-button")
+    .addEventListener("click", function () {
+      document.getElementById("payment-popup").style.display = "none";
+      modal.style.display = "block";
+    });
 
   // Display the modal when "Checkout" is clicked
   transferForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    // hide the form
+    transferForm.style.opacity = 0;
 
     // Get form data
 
@@ -118,14 +104,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // Close the modal when the close button or "Back" button is clicked
   span.addEventListener("click", function () {
     modal.style.display = "none";
+    transferForm.style.opacity = 1;
   });
 
   closeButton.addEventListener("click", function () {
     modal.style.display = "none";
+    transferForm.style.opacity = 1;
   });
 
   // Proceed with sending the PDF when "Confirm" is clicked
   confirmButton.addEventListener("click", async function () {
+    // hide modal form
+    modal.style.opacity = 0;
     // Gather form data
     const formData = new FormData(transferForm);
     const formDataObject = {};

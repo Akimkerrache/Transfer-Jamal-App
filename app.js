@@ -22,6 +22,9 @@ const wss = new WebSocket.Server({ server });
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/try.html");
+});
 
 // Read the archive folder
 const archivePath = path.join(__dirname, "archive");
@@ -53,7 +56,7 @@ if (!isNaN(mostRecentFile)) {
 app.post("/update-rate", (req, res) => {
   const newRate = parseFloat(req.body.newRate);
   exchangeRate = newRate; // Update the rate
-  console.log(newRate);
+
   //*
   // Archive the rate with the current date
   // Get current date in the format YYYY-MM-DD

@@ -68,28 +68,6 @@ const logoutButton = document.getElementById("logout-btn");
 if (logoutButton) {
   logoutButton.addEventListener("click", logout);
 }
-/*
-// try working
-// Function to check if the session has expired
-let sessionExpiration = null;
-const sessionDuration = 1 * 60 * 1000;
-sessionExpiration = Date.now() + sessionDuration;
-
-function checkSessionExpiration() {
-  if (sessionStorage.getItem("sessionExpiration") < Date.now()) {
-    alert("Your session has expired. Please log in again.");
-    window.location.href = "/index.html";
-  }
-}
-
-// Check session expiration every minute
-setInterval(checkSessionExpiration, 10000);
-
-// Initialize session expiration in sessionStorage
-sessionStorage.setItem("sessionExpiration", sessionExpiration);
-*/
-
-// JavaScript for admin.js (client-side code)
 
 // Function to check if the user is logged in and handle session expiration
 function checkLoginStatus() {
@@ -104,7 +82,7 @@ function checkLoginStatus() {
     if (currentTime < sessionExpiration) {
       setTimeout(function () {
         location.reload();
-      }, 15000);
+      }, 20000);
       // The user is logged in and the session is not expired
       // Continue to display the admin panel
     } else {
@@ -113,7 +91,7 @@ function checkLoginStatus() {
       logoutAndRedirect();
     }
   } else {
-    alert("Error in isLoggedin or SessionExpiration");
+    alert("Time session has expired, please Login again!");
     // The user is not logged in, redirect to index.html
     logoutAndRedirect();
   }

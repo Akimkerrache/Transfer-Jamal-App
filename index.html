@@ -15,12 +15,36 @@
 
       <nav>
         <ul>
-          <li id="back-btn"><img src="/assets/back.png" alt="login" /></li>
-          <li id="hm-btn"><img src="/assets/hm.png" alt="login" /></li>
+          <li
+            id="back-btn"
+            onclick="window.location.href='https://www.jamalpay.com/dashboard';"
+          >
+            <img src="/assets/back.png" alt="login" />
+          </li>
+          <li
+            id="hm-btn"
+            onclick="window.location.href='https://jamalpay.com';"
+          >
+            <img src="/assets/hm.png" alt="login" />
+          </li>
         </ul>
       </nav>
     </header>
     <section class="main-section">
+      <div class="lottie-container">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <lottie-player
+          src="https://lottie.host/952d3f6e-edc6-4843-95c7-676ab9a22d74/FsasNbPQTP.json"
+          background
+          speed="1"
+          style="width: 100%; height: 100%"
+          direction="1"
+          mode="normal"
+          loop
+          autoplay
+        >
+        </lottie-player>
+      </div>
       <form id="transfer-form">
         <h2 class="f-t">Transfer Form</h2>
         <p class="t-p">Please fill in all your data correctly</p>
@@ -108,6 +132,7 @@
             required
             autocomplete="cc-number"
             placeholder="0123456789/ 99"
+            maxlength="14"
           />
         </div>
         <div class="form-group">
@@ -186,6 +211,7 @@
             required
             step=".01"
             autocomplete="off"
+            maxlength="10"
           />
           <p id="converted-amount">Amount in DZA: ...</p>
           <!-- <input type="hidden" id="rate" name="rate" />-->
@@ -199,6 +225,7 @@
             id="message"
             name="message"
             placeholder="Your message"
+            maxlength="60"
           />
         </div>
 
@@ -211,11 +238,41 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <div id="modal-content"></div>
-        <button id="confirmButton">Confirm</button>
-        <button class="closeButton">Back</button>
+        <div>
+          <button class="closeButton">Back</button>
+          <button id="confirm-button">Next</button>
+        </div>
       </div>
-      <div><button id="downloadPdfButton">Download PDF</button></div>
     </div>
+
+    <!-- Popup Window -->
+    <div class="popup" id="payment-popup">
+      <div class="popup-pay">
+        <div class="payment-options">
+          <button id="card-button" class="active">Zelle</button>
+          <button id="cash-button">CashApp</button>
+        </div>
+        <div class="payment-details">
+          <div id="card-details" class="payment-info">
+            <!-- Card payment details go here -->
+            <img class="zelle" src="/assets/Zelle.png" alt="zelle" />
+            <p id="to-amount-usd">Zelle exactly USD amount:</p>
+            <p>(JAMALPAYTEAM@GMAIL.COM)</p>
+          </div>
+          <div id="cash-details" class="payment-info hidden">
+            <!-- Cash payment details go here -->
+            <img class="zelle" src="/assets/cashApp.png" alt="zelle" />
+            <p>Currently not available.</p>
+            <p>Sorry for the inconvenience, we are working on it!</p>
+          </div>
+        </div>
+        <div class="f-btn">
+          <button id="close-button">Back</button>
+          <button id="confirmButton">Confirm</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Login form -->
     <!-- Login Popup Container -->
     <div id="login-popup" class="popup-login">
@@ -232,6 +289,7 @@
         </form>
       </div>
     </div>
+
     <footer>
       <div class="copy-f">
         <p class="copy-r">

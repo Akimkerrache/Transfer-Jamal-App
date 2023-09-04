@@ -13,16 +13,17 @@ body {
   overflow-x: hidden;
 }
 header {
-  background: linear-gradient(to bottom, #ffffff, #f6f6f6);
+  background: linear-gradient(to bottom, #ffffff00, #f6f6f600);
   color: #fff;
   padding: 0 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 99999;
 }
 
 .logo img {
-  width: 100px;
+  width: 150px;
   padding: 5px;
 }
 
@@ -53,11 +54,14 @@ nav ul li {
 }
 
 form {
-  background: #ffffff;
+  background: #ffffffe8;
   padding: 30px;
   border-radius: 2px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.525);
   width: 400px;
+}
+#transfer-form {
+  z-index: 2;
 }
 .f-t {
   margin-left: 26%;
@@ -97,13 +101,21 @@ select {
   justify-content: center;
 }
 button {
+  border: none;
   color: white;
+  font-weight: 700;
   background-color: #050025;
   padding: 8px;
   border-radius: 8px;
+  transition: ease-in-out 0.4s;
+}
+button:hover {
+  color: #050025;
+  background: linear-gradient(to bottom, #c9d400, #dacb00);
 }
 
 #checkout {
+  font-size: 16px;
   margin-bottom: 10px;
   width: 100px;
   padding: 10px;
@@ -112,6 +124,11 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 8px;
+  transition: ease-in-out 0.4s;
+}
+#checkout:hover {
+  color: #050025;
+  background: linear-gradient(to bottom, #dfeb00, #e7d701);
 }
 
 /* Styles for the modal */
@@ -125,17 +142,16 @@ button {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #0000008a;
-  justify-content: space-between;
+  background-color: #00000062;
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #ffffffe8;
   margin: 10% auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  height: 80%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 520px;
   border-radius: 2px;
   justify-content: space-between;
 }
@@ -148,24 +164,16 @@ button {
 }
 
 .closeButton {
-  background-color: #f44336;
+  width: 80px;
+  background-color: #92025b;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 8px 15px;
+  margin: 8px;
   cursor: pointer;
-  float: right;
+  float: left;
 }
 
-#confirmButton {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  cursor: pointer;
-  float: right;
-}
 .copy-f {
   font-size: 12px;
   width: 100%;
@@ -180,28 +188,93 @@ button {
   padding: 0 10px;
 }
 
-@media (max-width: 500px) {
-  header {
-    padding: 0 15px;
-  }
-  .logo img {
-    width: 80px;
-    padding: 5px;
-  }
-
-  .main-section {
-    margin: 70px 10px;
-  }
-  form {
-    margin: 15px;
-    padding: 20px;
-    width: 100%;
-  }
-
-  .copy-f {
-    font-size: 10px;
-  }
+/* the payment form */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 25, 0.6);
+  z-index: 999;
+  justify-content: space-between;
 }
+
+.popup-pay {
+  background-color: #ffffffe8;
+  border-radius: 2px;
+  width: 380px;
+  height: 250px;
+  margin: 150px auto;
+  padding: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payment-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-options button {
+  background-color: #274294;
+  border: none;
+  cursor: pointer;
+}
+
+.payment-options .active {
+  background-color: #0c1a45;
+  font-weight: bold;
+}
+#card-button,
+#cash-button {
+  width: 100%;
+  border-radius: 1px;
+  padding: 15px;
+  padding: 10px;
+}
+
+.payment-details {
+  height: 120px;
+  padding: 20px;
+}
+
+.payment-details .hidden {
+  display: none;
+}
+
+.payment-info {
+  text-align: left;
+}
+.zelle {
+  position: relative;
+  width: 80px;
+  float: right;
+}
+
+#close-button {
+  width: 80px;
+  background-color: #92025b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin: 8px;
+  cursor: pointer;
+  float: left;
+}
+#confirmButton,
+#confirm-button {
+  width: 80px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin: 8px;
+  cursor: pointer;
+  float: right;
+}
+/* end of payment form */
 
 /* admin area */
 .admin-main-section {
@@ -283,10 +356,15 @@ tbody td {
 .login-btn {
   list-style: none;
   width: 35px;
-  background-color: rgba(255, 255, 255, 0.011);
+  background-color: #ffffff03;
   padding: 0 10px;
   margin: 5px;
   border: none;
+  align-items: center;
+  justify-content: center;
+}
+.login-btn:hover {
+  list-style: none;
 }
 .login-btn img {
   width: 25px;
@@ -302,4 +380,77 @@ tbody td {
 .logout-btn img {
   padding: 5px;
   width: 30px;
+}
+
+/* Waves Apply styles to make the container unmovable and click-through */
+.lottie-container {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-top: 50px;
+  width: 100%;
+  height: 88%;
+  z-index: 1; /* Optional: Adjust the z-index as needed */
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Allow pointer events on the lottie-player element */
+lottie-player {
+  pointer-events: auto;
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 0 15px;
+  }
+  body {
+    background-image: url("/assets/bg-m.jpg");
+  }
+  .logo img {
+    width: 100px;
+    padding: 5px;
+  }
+
+  .main-section {
+    margin: 70px 10px;
+  }
+  form {
+    margin: 15px;
+    padding: 20px;
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 300px;
+  }
+  .popup-pay {
+    background-color: #ffffffe8;
+    border-radius: 2px;
+    width: 300px;
+    height: 250px;
+    margin: 150px auto;
+    padding: 1px;
+  }
+
+  .t-p {
+    margin-left: 7%;
+  }
+
+  .copy-f {
+    font-size: 10px;
+  }
+  .lottie-container {
+    width: 900px;
+    height: 400px;
+  }
 }
