@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
-    console.log(formData);
+
     // Create a string with formatted form data
     let formDataText = "<h2>Transfer Details</h2>";
     for (const [key, value] of Object.entries(formDataObject)) {

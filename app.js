@@ -280,7 +280,6 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const user = users.find((u) => u.username === username);
-  console.log(user);
 
   if (!user) {
     res.status(401).json({ message: "01 Invalid username or password" });
@@ -288,7 +287,6 @@ app.post("/login", async (req, res) => {
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
-  console.log(isPasswordValid);
 
   if (isPasswordValid) {
     sessionToken = generateSessionToken();
