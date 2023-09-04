@@ -115,7 +115,40 @@ app.post("/login", (req, res) => {
   }
 });
 */
+/*
+// logo to pdf
+const fs = require("fs");
+const { PDFDocument, rgb, degrees } = require("pdf-lib");
 
+// Load the logo image
+const logoImageBytes = fs.readFileSync("path/to/your/logo.png");
+
+// Read an existing PDF or create a new one
+const pdfDoc = await PDFDocument.load(
+  fs.readFileSync("path/to/your/existing.pdf")
+);
+
+// Add a new page
+const [width, height] = [pdfDoc.getPageWidth(0), pdfDoc.getPageHeight(0)];
+const page = pdfDoc.insertPage(0, [width, height]);
+
+// Embed the logo image
+const logoImage = await pdfDoc.embedPng(logoImageBytes);
+
+// Get the new page and draw the logo
+const contentStream = pdfDoc.createContentStream(
+  `q\n1 0 0 1 ${width / 2 - logoImage.width / 2} ${
+    height - logoImage.height
+  }\ncm\n${logoImage.width} 0 0 ${logoImage.height} 0 0\nDo\nQ\n`
+);
+page.addContentStreams([contentStream]);
+
+// Save the modified PDF
+const modifiedPdfBytes = await pdfDoc.save();
+
+// Write the modified PDF to a file or send it via email
+fs.writeFileSync("path/to/save/modified.pdf", modifiedPdfBytes);
+*/
 // send PDF ////////////////
 app.post("/send-pdf-email", async (req, res) => {
   const { data } = req.body;
@@ -129,10 +162,23 @@ app.post("/send-pdf-email", async (req, res) => {
     const pdfDoc = await PDFDocument.create();
     const timesRomanFont = await pdfDoc.embedFont("Helvetica");
 
+    // try 02
+    const logoImageBytes = fs.readFileSync("assets/J-logo.png");
+    const logoImage = await pdfDoc.embedPng(logoImageBytes);
+    const jpgDims = logoImage.scale(0.5);
+
+    /*
+    // try 01
+    const jpgUrl = "https://pdf-lib.js.org/assets/cat_riding_unicorn.jpg";
+    const jpgImageBytes = await fetch(jpgUrl).then((res) => res.arrayBuffer());
+    const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+    const jpgDims = logoImage.scale(0.5);
+*/
     const page = pdfDoc.addPage();
     const { width, height } = page.getSize();
     const fontSize = 14;
-    let pdfContent = "Jamal Pay Transfer Details\n";
+
+    let pdfContent = `Jamal Pay Transfer Details\n`;
     for (const [key, value] of Object.entries(data)) {
       pdfContent += `\n- ${key}: ${value}`;
     }
@@ -148,12 +194,20 @@ app.post("/send-pdf-email", async (req, res) => {
     submitted. Transfers are normally completed within 1-3 business
     days. You will receive an email once your transfer
     has been processed.`;
+
+    page.drawImage(logoImage, {
+      x: 50,
+      y: 50,
+      width: 200,
+      height: 100,
+    });
+
     page.drawText(pdfContent, {
       x: 50,
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.2, 0.106),
+      color: rgb(0, 0.2, 0),
     });
 
     const pdfBytes = await pdfDoc.save();

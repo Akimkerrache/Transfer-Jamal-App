@@ -146,29 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Transfer sent successfully! Thank you)");
       setTimeout(function () {
         location.reload();
-      }, 2000);
+      }, 1500);
     } else {
-      alert("Errorn submitting the transfer. Please try again!");
+      alert("Error submitting the transfer. Please try again!");
     }
   });
 });
-
-// current time
-function updateTime() {
-  const currentTime = new Date();
-  //const now = currentTime.toLocaleString();
-
-  const timeString = currentTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  document.getElementById("time").textContent = timeString;
-  document.getElementById("time_m").textContent = timeString;
-}
-
-// Update the time every second
-setInterval(updateTime, 1000);
 
 // login
 

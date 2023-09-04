@@ -26,7 +26,13 @@
       <h1>Admin Panel</h1>
       <form id="rate-form">
         <label tyme="number" for="new-rate">New Rate:</label>
-        <input type="number" id="new-rate" name="new-rate" required />
+        <input
+          type="number"
+          id="new-rate"
+          name="new-rate"
+          required
+          step=".01"
+        />
         <button type="submit">Update Rate</button>
       </form>
     </div>
