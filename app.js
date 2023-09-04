@@ -181,7 +181,7 @@ app.post("/send-pdf-email", async (req, res) => {
     const { width, height } = page.getSize();
     const fontSize = 14;
 
-    let pdfContent = `Jamal Pay Transfer Details\n`;
+    let pdfContent = `Jamal Pay Transfer Details:\n`;
     for (const [key, value] of Object.entries(data)) {
       pdfContent += `\n- ${key}: ${value}`;
     }
@@ -210,7 +210,7 @@ app.post("/send-pdf-email", async (req, res) => {
       y: height - 4 * fontSize,
       size: fontSize,
       font: timesRomanFont,
-      color: rgb(0, 0.2, 0),
+      color: rgb(0, 0, 0),
     });
 
     const pdfBytes = await pdfDoc.save();
@@ -219,19 +219,21 @@ app.post("/send-pdf-email", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "g.cosmosweb@gmail.com",
-        pass: "etrybmxwskylumbq",
+        user: "Jamalpayteam@gmail.com",
+        pass: "pyjncwfublkwxdky", // jp: jiujfdutrbukgkny  gc:lfswcvyonjtvxgrl
       },
     });
 
     const mailOptions = {
-      from: "g.cosmosweb@gmail.com",
+      from: "Jamalpayteam@gmail.com",
       to: data.email,
-      subject: "Form Data PDF test pay 01",
-      text: "Attached is the PDF containing the form data.",
+      subject: "Jamal-Pay-Transfer",
+      text: `Thank you for using Jamal Pay! Here is your invoice, Amount: ${amountInUSD.toFixed(
+        2
+      )} USD, ${amountInDZA.toFixed(2)} DZA, `,
       attachments: [
         {
-          filename: `Transfer-data-${currentDateTime}.pdf`,
+          filename: `Receipt ${currentDateTime}.pdf`,
           content: pdfBytes,
         },
       ],
@@ -239,26 +241,26 @@ app.post("/send-pdf-email", async (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error("Error sending email:", error);
-        res.status(500).json({ error: "Error sending email" });
+        console.error("Error sending Transfer:", error);
+        res.status(500).json({ error: "Error sending Transfer" });
       } else {
         console.log("Transfer sent:", info.response);
-        res.status(200).json({ message: "Email sent successfully" });
+        res.status(200).json({ message: "Transfer sent successfully" });
       }
     });
   } catch (error) {
-    console.error("Error generating Transfer or sending email:", error);
+    console.error("Error generating Transfer", error);
     res
       .status(500)
-      .json({ error: "Error generating Transfer or sending email" });
+      .json({ error: "Error generating Transfer, please try again!" });
   }
 });
 
 // handle login data from login.html
-// Define a session token and expiration time (5 minutes)
+
 let sessionToken = null;
 let sessionExpiration = null;
-const sessionDuration = 1 * 60 * 1000; // 5 minutes in milliseconds
+const sessionDuration = 1 * 60 * 1000; //
 
 // handle login data from index.html
 const bcrypt = require("bcrypt");
@@ -267,7 +269,7 @@ const bcrypt = require("bcrypt");
 const users = [
   {
     username: "jamal",
-    // Hashed password for "ijpay23200"
+
     passwordHash:
       "$2a$04$ioDzZPDmegpK2qiqoI8XwOTYK0kpEQW09ieNoYWeA0F1U5T1rf8Vy",
   },
@@ -328,13 +330,7 @@ app.post("/login", async (req, res) => {
 app.get("/admin.html", requireAuthentication, (req, res) => {
   res.sendFile(__dirname + "/admin.html");
 });
-/*
-// Start your Express server
-const PORT = process.env.PORT || port;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-*/
+
 // Listen on port 5000
 app.listen(process.env.PORT || port, () =>
   console.log(`Listening on port ${port}`)

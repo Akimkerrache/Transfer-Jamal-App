@@ -136,9 +136,12 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Transfer sent successfully! Thank you)");
       setTimeout(function () {
         location.reload();
-      }, 1500);
+      }, 1000);
     } else {
       alert("Error submitting the transfer. Please try again!");
+      setTimeout(function () {
+        location.reload();
+      }, 1000);
     }
   });
 });

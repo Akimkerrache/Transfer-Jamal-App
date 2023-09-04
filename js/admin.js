@@ -9,7 +9,6 @@ function addRateToTable(date, rate) {
   newRow.innerHTML = `<td>  ${date}</td><td>  ${rate}$</td>`;
 }
 
-// first -- working
 rateForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const newRate = parseFloat(document.getElementById("new-rate").value);
@@ -53,12 +52,8 @@ async function fetchArchivedRates() {
 // Call the function to fetch and display archived rates
 fetchArchivedRates();
 
-// JavaScript for admin.js (client-side code)
-
 // Function to log out and redirect to index.html
 function logout() {
-  // Perform any necessary logout actions (e.g., clearing session data)
-
   // Redirect to index.html
   window.location.href = "/index.html"; // Use an absolute path
 }
