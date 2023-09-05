@@ -151,7 +151,7 @@ button:hover {
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 400px;
-  height: 520px;
+  height: 530px;
   border-radius: 2px;
   justify-content: space-between;
 }
@@ -190,6 +190,7 @@ button:hover {
 
 /* the payment form */
 .popup {
+  color: #283e2bd6;
   display: none;
   position: fixed;
   top: 0;

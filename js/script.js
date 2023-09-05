@@ -115,6 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Proceed with sending the PDF when "Confirm" is clicked
   confirmButton.addEventListener("click", async function () {
     // hide modal form
+    confirmButton.disabled = true;
+    confirmButton.style.background = "#283e2bd6";
     modal.style.opacity = 0;
     // Gather form data
     const formData = new FormData(transferForm);
@@ -134,14 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (response.ok) {
       alert("Transfer sent successfully! Thank you)");
-      setTimeout(function () {
-        location.reload();
-      }, 1000);
+      location.reload();
+      window.location.href = "http://jamalpay.com/dashboard";
     } else {
       alert("Error submitting the transfer. Please try again!");
-      setTimeout(function () {
-        location.reload();
-      }, 1000);
+      location.reload();
     }
   });
 });

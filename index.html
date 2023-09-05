@@ -57,6 +57,7 @@
             name="first-name"
             required
             autocomplete="family-name"
+            maxlength="20"
           />
         </div>
         <div class="form-group">
@@ -67,6 +68,7 @@
             name="last-name"
             required
             autocomplete="given-name"
+            maxlength="20"
           />
         </div>
         <div class="form-group">
@@ -77,6 +79,7 @@
             name="email"
             required
             autocomplete="email"
+            maxlength="35"
           />
         </div>
         <div class="form-group">
@@ -88,6 +91,7 @@
             required
             autocomplete="cc-number"
             placeholder="Ex: +1 012 345 6789"
+            maxlength="20"
           />
         </div>
 
@@ -100,6 +104,7 @@
             name="recipient-name"
             required
             autocomplete="given-name"
+            maxlength="35"
           />
         </div>
         <div class="form-group">
@@ -110,6 +115,7 @@
             name="recipient-email"
             required
             autocomplete="email"
+            maxlength="35"
           />
         </div>
         <div class="form-group">
@@ -121,6 +127,7 @@
             required
             autocomplete="cc-number"
             placeholder="Ex: +213 712 345 6789"
+            maxlength="20"
           />
         </div>
         <div class="form-group">
@@ -132,7 +139,7 @@
             required
             autocomplete="cc-number"
             placeholder="0123456789/ 99"
-            maxlength="14"
+            maxlength="20"
           />
         </div>
         <div class="form-group">
@@ -208,6 +215,8 @@
             id="amount_usd"
             name="amount"
             placeholder="Enter amount from 50$ to 1000$"
+            min="50"
+            max="1000"
             required
             step=".01"
             autocomplete="off"
