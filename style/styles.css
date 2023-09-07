@@ -1,6 +1,7 @@
 body {
-  font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
-    source-sans-pro, sans-serif;
+  font-family: "run-medium", sans-serif;
+  font-weight: normal;
+  font-style: normal;
   font-weight: 700;
   background-image: url("/assets/bg2.jpg");
   background-position: center;

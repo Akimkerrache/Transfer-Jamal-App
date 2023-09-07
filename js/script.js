@@ -79,26 +79,41 @@ document.addEventListener("DOMContentLoaded", function () {
   transferForm.addEventListener("submit", function (event) {
     event.preventDefault();
     // hide the form
-    transferForm.style.opacity = 0;
 
-    // Get form data
+    const email = document.getElementById("email").value;
+    const confirmEmail = document.getElementById("confirm-email").value;
+    const recipientCCP = document.getElementById("recipient-CCP").value;
+    const confirmtCCP = document.getElementById("confirm-ccp").value;
 
-    const formData = new FormData(transferForm);
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
+    if (email === confirmEmail && recipientCCP === confirmtCCP) {
+      // The email entries match, you can proceed with form submission
+      // You can remove this line and submit the form normally
+      transferForm.style.opacity = 0;
 
-    // Create a string with formatted form data
-    let formDataText = "<h2>Transfer Details</h2>";
-    for (const [key, value] of Object.entries(formDataObject)) {
-      formDataText += `<p><strong>${key}:</strong> ${value}</p>`;
+      // Get form data
+
+      const formData = new FormData(transferForm);
+      const formDataObject = {};
+      formData.forEach((value, key) => {
+        formDataObject[key] = value;
+      });
+
+      // Create a string with formatted form data
+      let formDataText = "<h2>Transfer Details</h2>";
+      for (const [key, value] of Object.entries(formDataObject)) {
+        formDataText += `<p><strong>${key}:</strong> ${value}</p>`;
+      }
+
+      // Set modal content with form data
+      modalContent.innerHTML = formDataText;
+
+      modal.style.display = "block";
+      // Uncomment the next line to submit the form
+      // document.getElementById("main-form").submit();
+    } else {
+      // The email entries don't match, show an error message
+      alert("Email entries or CCP do not match. Please re-enter.");
     }
-
-    // Set modal content with form data
-    modalContent.innerHTML = formDataText;
-
-    modal.style.display = "block";
   });
 
   // Close the modal when the close button or "Back" button is clicked

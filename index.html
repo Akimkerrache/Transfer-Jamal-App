@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/style/styles.css" />
+    <link
+      href="https://www.dafontfree.net/embed/cnVuLW1lZGl1bSZkYXRhLzgvci80NDk3MS9ydW4udHRm"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.js"></script>
+
     <title>Jamal-App Pay</title>
   </head>
   <body>
@@ -82,6 +88,17 @@
             maxlength="35"
           />
         </div>
+        <div class="confirm-type">
+          <label for="confirm-email">Confirm Email:</label>
+          <input
+            type="email"
+            id="confirm-email"
+            name="confirm-email"
+            required
+            placeholder="re-enter Email"
+          />
+        </div>
+
         <div class="form-group">
           <label for="phone">Phone Number:</label>
           <input
@@ -94,7 +111,7 @@
             maxlength="20"
           />
         </div>
-
+        <hr class="rounded" />
         <!-- Recipient's Details -->
         <div class="form-group">
           <label for="recipient-name">Recipient's Name:</label>
@@ -107,33 +124,11 @@
             maxlength="35"
           />
         </div>
+
         <div class="form-group">
-          <label for="recipient-email">Recipient's Email:</label>
+          <label for="recipient-CCP">Recipient CCP (RIP)</label>
           <input
-            type="email"
-            id="recipient-email"
-            name="recipient-email"
-            required
-            autocomplete="email"
-            maxlength="35"
-          />
-        </div>
-        <div class="form-group">
-          <label for="recipient-phone">Recipient's Phone:</label>
-          <input
-            type="tel"
-            id="recipient-phone"
-            name="recipient-phone"
-            required
-            autocomplete="cc-number"
-            placeholder="Ex: +213 712 345 6789"
-            maxlength="20"
-          />
-        </div>
-        <div class="form-group">
-          <label for="recipient-CCP">Recipient CCP</label>
-          <input
-            type="tel"
+            type="number"
             id="recipient-CCP"
             name="recipient-CCP"
             required
@@ -142,10 +137,21 @@
             maxlength="20"
           />
         </div>
+        <div class="confirm-type">
+          <label for="confirm-ccp">Confirm CCP (RIP)</label>
+          <input
+            type="number"
+            id="confirm-ccp"
+            name="confirm-ccp"
+            required
+            placeholder="re-enter CCP"
+          />
+        </div>
+        <!--
         <div class="form-group">
-          <label for="recipient-address">Recipient's Address (Wilayas)</label>
+          <label for="recipient-address">Recipient's Wilayas</label>
           <select id="wilayas" name="Wilayas">
-            <!-- Display a list of wilayas of Algeria to choose -->
+            
             <option value="	adrar">01-Adrar</option>
             <option value="chlef">02-Chlef</option>
             <option value="	Laghouat">03-Laghouat</option>
@@ -204,9 +210,10 @@
             <option value="	Ain Salah">57- Ain Salah</option>
             <option value="	Ain Guezzam">58-Ain Guezzam</option>
           </select>
-          <!-- Add more address fields as needed... -->
+          
         </div>
-
+        -->
+        <hr class="rounded" />
         <!-- Amount and Checkout -->
         <div class="form-group">
           <label for="amount">Amount to Send (USD):</label>
@@ -309,6 +316,7 @@
         </button>
       </div>
     </footer>
+
     <script src="/js/script.js"></script>
   </body>
 </html>
