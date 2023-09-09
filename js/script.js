@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const amountInput = document.getElementById("amount_usd");
   const convertedAmountDisplay = document.getElementById("converted-amount");
   const toPayAmount = document.getElementById("to-amount-usd");
+  const toPayAmount2 = document.getElementById("to-amount-usd2");
   const modal = document.getElementById("myModal");
   const confirmButton = document.getElementById("confirmButton");
   const closeButton = document.querySelector(".closeButton");
@@ -49,6 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // display the amount to pay in usd
       const amountInUSD = parseFloat(amountInput.value);
       toPayAmount.textContent = `Zelle exact amount in USD: ${amountInUSD.toFixed(
+        2
+      )}`;
+      toPayAmount2.textContent = `CashApp exact amount in USD: ${amountInUSD.toFixed(
         2
       )}`;
       modal.style.display = "none";

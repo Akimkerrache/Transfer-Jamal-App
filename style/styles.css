@@ -254,6 +254,14 @@ button:hover {
   width: 80px;
   float: right;
 }
+.sendTO-CA {
+  font-size: 24px;
+  background-color: #44ff4a;
+  border-radius: 15px;
+  padding: 6px 12px;
+  margin-left: 20%;
+  border: 3px solid #92025b;
+}
 
 #close-button {
   width: 80px;
@@ -442,6 +450,10 @@ lottie-player {
     height: 250px;
     margin: 150px auto;
     padding: 1px;
+  }
+  .sendTO-CA {
+    font-size: 20px;
+    margin-left: 16%;
   }
 
   .t-p {
