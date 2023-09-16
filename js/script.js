@@ -154,7 +154,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (response.ok) {
-      alert("Transfer sent successfully! Thank you)");
+      alert(
+        "Transfer sent successfully! Please check spam box for confirmation email. Thank you)"
+      );
       location.reload();
       window.location.href = "http://jamalpay.com/dashboard";
     } else {
