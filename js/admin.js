@@ -77,7 +77,7 @@ function checkLoginStatus() {
     if (currentTime < sessionExpiration) {
       setTimeout(function () {
         location.reload();
-      }, 20000);
+      }, 30000);
       // The user is logged in and the session is not expired
       // Continue to display the admin panel
     } else {
