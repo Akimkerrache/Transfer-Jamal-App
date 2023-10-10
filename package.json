@@ -1,7 +1,7 @@
 {
   "name": "jamal-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Transfer money to Algeria",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
