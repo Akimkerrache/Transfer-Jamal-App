@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 
+const { exec } = require("child_process");
+
 const app = express();
 const port = 5000;
 app.use(bodyParser.json());
@@ -48,9 +50,45 @@ if (!isNaN(mostRecentFile)) {
   // Use the saved rate in your app
   exchangeRate = savedRate;
 }
+// new app 2
+app.post("/update-rate", (req, res) => {
+  try {
+    const newRate = parseFloat(req.body.newRate);
+    exchangeRate = newRate; // Update the rate
 
+    // Archive the rate with the current date
+    const currentDay = new Date().toISOString().slice(0, 10);
+    const currentDate = new Date().toLocaleDateString();
+    const archivePath = path.join(__dirname, "archive", `${currentDay}.json`);
+    const rateData = { date: currentDate, rate: newRate };
+
+    fs.writeFileSync(archivePath, JSON.stringify(rateData));
+
+    // Commit and push changes to GitHub
+    exec(
+      'git add . && git commit -m "Update exchange rate" && git push origin master',
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error pushing to GitHub: ${error.message}`);
+          res.status(500).json({ error: "Error updating rate and archiving" });
+          return;
+        }
+
+        res
+          .status(200)
+          .json({ message: "Rate updated and archived successfully" });
+      }
+    );
+  } catch (error) {
+    console.error(`Error updating rate and archiving: ${error.message}`);
+    res.status(500).json({ error: "Error updating rate and archiving" });
+  }
+});
+
+//end
+/*
 //new app
-const { exec } = require("child_process");
+
 
 // Handle rate update and archiving
 app.post("/update-rate", (req, res) => {
@@ -86,6 +124,7 @@ app.post("/update-rate", (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+*/
 /*
 // old app
 // Handle rate update and archiving
