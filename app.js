@@ -15,9 +15,6 @@ const WebSocket = require("ws");
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// Define the path to the archive folder
-//const archiveFolderPath = path.join(__dirname, "archive");
-
 // Serve the admin page and send archived rates to the client
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -52,12 +49,45 @@ if (!isNaN(mostRecentFile)) {
   exchangeRate = savedRate;
 }
 
+//new app
+const { exec } = require("child_process");
+
 // Handle rate update and archiving
 app.post("/update-rate", (req, res) => {
   const newRate = parseFloat(req.body.newRate);
   exchangeRate = newRate; // Update the rate
 
-  //*
+  // Archive the rate with the current date
+  const currentDay = new Date().toISOString().slice(0, 10);
+  const currentDate = new Date().toLocaleDateString();
+  const archivePath = path.join(__dirname, "archive", `${currentDay}.json`);
+  const rateData = { date: currentDate, rate: newRate };
+
+  fs.writeFileSync(archivePath, JSON.stringify(rateData));
+
+  // Commit and push changes to GitHub
+  exec(
+    'git add . && git commit -m "Update exchange rate" && git push origin master',
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error pushing to GitHub: ${error.message}`);
+        res.status(500).json({ error: "Error updating rate and archiving" });
+        return;
+      }
+
+      res
+        .status(200)
+        .json({ message: "Rate updated and archived successfully" });
+    }
+  );
+});
+/*
+// old app
+// Handle rate update and archiving
+app.post("/update-rate", (req, res) => {
+  const newRate = parseFloat(req.body.newRate);
+  exchangeRate = newRate; // Update the rate
+
   // Archive the rate with the current date
   // Get current date in the format YYYY-MM-DD
   const currentDay = new Date().toISOString().slice(0, 10);
@@ -68,18 +98,11 @@ app.post("/update-rate", (req, res) => {
     archivePath,
     JSON.stringify({ date: currentDate, rate: newRate })
   );
-  /*
-  const rateData = { date: currentDate, rate: newRate };
-  const rateFileName = `rate${timeString}.json`;
-  fs.writeFileSync(
-    path.join(archiveFolderPath, rateFileName),
-    JSON.stringify(rateData)
-  );
-*/
+
   res.status(200).json({ message: "Rate updated and archived successfully" });
 });
-
-//*
+*/
+//
 // Serve archived rates
 app.get("/get-archived-rates", (req, res) => {
   // Read archived rates from files in the archive folder
@@ -93,65 +116,6 @@ app.get("/get-archived-rates", (req, res) => {
   res.json(archivedRates);
 });
 
-// Store the authentication status
-
-/*
-// Serve main page if authenticated, else redirect to login
-app.get("/", (req, res) => {
-  if (isAuthenticated) {
-    res.sendFile(__dirname + "/admin.html");
-  } else {
-    res.redirect("/login");
-  }
-});
-
-
-// Handle login form submission
-app.post("/login", (req, res) => {
-  const providedPassword = req.body.password;
-  // Compare with your actual password
-  if (providedPassword === "1234") {
-    isAuthenticated = true;
-    res.redirect("/admin");
-  } else {
-    res.redirect("/login");
-  }
-});
-*/
-/*
-// logo to pdf
-const fs = require("fs");
-const { PDFDocument, rgb, degrees } = require("pdf-lib");
-
-// Load the logo image
-const logoImageBytes = fs.readFileSync("path/to/your/logo.png");
-
-// Read an existing PDF or create a new one
-const pdfDoc = await PDFDocument.load(
-  fs.readFileSync("path/to/your/existing.pdf")
-);
-
-// Add a new page
-const [width, height] = [pdfDoc.getPageWidth(0), pdfDoc.getPageHeight(0)];
-const page = pdfDoc.insertPage(0, [width, height]);
-
-// Embed the logo image
-const logoImage = await pdfDoc.embedPng(logoImageBytes);
-
-// Get the new page and draw the logo
-const contentStream = pdfDoc.createContentStream(
-  `q\n1 0 0 1 ${width / 2 - logoImage.width / 2} ${
-    height - logoImage.height
-  }\ncm\n${logoImage.width} 0 0 ${logoImage.height} 0 0\nDo\nQ\n`
-);
-page.addContentStreams([contentStream]);
-
-// Save the modified PDF
-const modifiedPdfBytes = await pdfDoc.save();
-
-// Write the modified PDF to a file or send it via email
-fs.writeFileSync("path/to/save/modified.pdf", modifiedPdfBytes);
-*/
 // send PDF ////////////////
 app.post("/send-pdf-email", async (req, res) => {
   const { data } = req.body;
@@ -170,13 +134,6 @@ app.post("/send-pdf-email", async (req, res) => {
     const logoImage = await pdfDoc.embedPng(logoImageBytes);
     const jpgDims = logoImage.scale(0.5);
 
-    /*
-    // try 01
-    const jpgUrl = "https://pdf-lib.js.org/assets/cat_riding_unicorn.jpg";
-    const jpgImageBytes = await fetch(jpgUrl).then((res) => res.arrayBuffer());
-    const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-    const jpgDims = logoImage.scale(0.5);
-*/
     const page = pdfDoc.addPage();
     const { width, height } = page.getSize();
     const fontSize = 14;
