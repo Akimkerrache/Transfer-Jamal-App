@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
@@ -9,6 +11,7 @@ const { exec } = require("child_process");
 
 const app = express();
 const port = 5000;
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname)); // Serve static files from the current directory
 const http = require("http");
