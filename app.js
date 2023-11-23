@@ -66,7 +66,7 @@ app.post("/update-rate", (req, res) => {
 
     // Commit and push changes to GitHub
     exec(
-      'git add . && git commit -m "Update exchange rate" && git push origin master',
+      'git add . && git commit -m "Update exchange rate" && git push origin main',
       (error, stdout, stderr) => {
         if (error) {
           console.error(`Error pushing to GitHub: ${error.message}`);
