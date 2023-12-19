@@ -14,8 +14,14 @@ rateForm.addEventListener("submit", async (event) => {
   const newRate = parseFloat(document.getElementById("new-rate").value);
 
   try {
-    // send the new rate to the server
-    const response = await fetch("https://transfer-jamal-pay.onrender.com", {
+    // Dynamically determine the base URL based on the environment
+    const baseURL =
+      process.env.NODE_ENV === "production"
+        ? window.location.origin
+        : "http://localhost:5000";
+
+    // Send the new rate to the server
+    const response = await fetch(`${baseURL}/update-rate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
