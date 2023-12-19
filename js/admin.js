@@ -99,7 +99,7 @@ function checkLoginStatus() {
     if (currentTime < sessionExpiration) {
       setTimeout(function () {
         location.reload();
-      }, 600000);
+      }, 450000);
       // The user is logged in and the session is not expired
       // Continue to display the admin panel
     } else {
@@ -120,5 +120,3 @@ function logoutAndRedirect() {
   localStorage.removeItem("sessionExpiration");
   window.location.href = "/index.html"; // Redirect to index.html
 }
-
-// Check the login status when the page loads
