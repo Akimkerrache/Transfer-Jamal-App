@@ -16,9 +16,9 @@ rateForm.addEventListener("submit", async (event) => {
   try {
     // Dynamically determine the base URL based on the environment
     const baseURL =
-      process.env.NODE_ENV === "production"
-        ? window.location.origin
-        : "http://localhost:5000";
+      window.location.hostname === "localhost"
+        ? "http://localhost:5000" // Use local development server address
+        : window.location.origin; // Use current origin in production
 
     // Send the new rate to the server
     const response = await fetch(`${baseURL}/update-rate`, {
@@ -99,7 +99,7 @@ function checkLoginStatus() {
     if (currentTime < sessionExpiration) {
       setTimeout(function () {
         location.reload();
-      }, 30000);
+      }, 600000);
       // The user is logged in and the session is not expired
       // Continue to display the admin panel
     } else {
